@@ -12,5 +12,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    return knex.schema.tableDrop("theaters");
+    return knex.schema.dropTable("theaters");
 };
