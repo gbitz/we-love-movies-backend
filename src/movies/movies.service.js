@@ -27,8 +27,8 @@ function listReviews(movieId) {
         .join("critics", "reviews.critic_id", "critics.critic_id")
         .select("reviews.*", "critics.*")
         .where({movie_id: movieId})
-        .first()
-        .then(addCritic)
+        .then(reviews => reviews.map(review => addCritic(review)))
+
 }
 
 module.exports = {
