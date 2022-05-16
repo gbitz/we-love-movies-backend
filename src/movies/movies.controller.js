@@ -6,6 +6,13 @@ async function list (req,res,next) {
     res.json({ data })
 }
 
+async function read (req,res,next) {
+    const {movieId} = req.params
+    const data = await moviesService.read(movieId)
+    res.json({ data })
+}
+
 module.exports = {
     list: [asyncErrorBoundary(list)],
+    read: [asyncErrorBoundary(read)],
 }
