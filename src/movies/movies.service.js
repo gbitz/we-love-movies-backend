@@ -11,7 +11,15 @@ function read(movieId) {
         .first()
 }
 
+function listReviews(movieId) {
+    return knex("reviews")
+        .join("critics", "reviews.critic_id", "critics.critic_id")
+        .select("reviews.*", "critics.*")
+        .where({movie_id: movieId})
+}
+
 module.exports = {
     list,
     read,
+    listReviews,
 }

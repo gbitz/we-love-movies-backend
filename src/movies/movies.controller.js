@@ -21,7 +21,24 @@ async function read (req,res,next) {
     res.json({ data: movie })
 }
 
+async function listReviews(req,res,next) {
+    const {movie} = res.locals;
+    const data = await moviesService.listReviews(movie.movie_id);
+    console.log(data);
+    res.json({data})
+}
+
 module.exports = {
-    list: [asyncErrorBoundary(list)],
-    read: [movieExists, asyncErrorBoundary(read)],
+    list: [
+        asyncErrorBoundary(list)
+    ],
+    read: [
+        movieExists,
+        asyncErrorBoundary(read)
+    ],
+    listReviews: [
+        movieExists,
+        asyncErrorBoundary(listReviews)
+    ],
+
 }
