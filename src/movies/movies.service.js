@@ -38,9 +38,17 @@ function listReviews(movieId) {
 
 }
 
+function listTheaters(movieId) {
+    return knex("theaters as t")
+        .join("movies_theaters as mt", "mt.theater_id", "t.theater_id")
+        .select("*")
+        .where({"mt.movie_id" : movieId})
+}
+
 module.exports = {
     list,
     read,
     listReviews,
     listShowing,
+    listTheaters,
 }
