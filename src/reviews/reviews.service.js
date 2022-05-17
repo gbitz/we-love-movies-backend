@@ -7,7 +7,7 @@ function read(reviewId) {
         .first()
 }
 
-function destroy(review_id) {
+function destroy(reviewId) {
     return knex("reviews")
         .where({review_id : reviewId})
         .del()
@@ -15,6 +15,6 @@ function destroy(review_id) {
 
 module.exports = {
     read,
-    delete: destroy,
-    
+    destroy,
+
 }

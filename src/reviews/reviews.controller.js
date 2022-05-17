@@ -11,15 +11,16 @@ async function reviewExists(req,res,next) {
     return next({status:404, message: `Review cannot be found.`})
 }
 
-async function deleteReview(req,res,next) {
+async function destroy(req,res,next) {
     const {review} = res.locals;
-    await reviewService.delete(review.review_id)
-    res.sendStatus({status:204, message:"No Content"})
+    console.log(review)
+    await reviewService.destroy(review.review_id)
+    res.sendStatus(204)
 }
 
 module.exports = {
-    deleteReview : [
+    delete: [
         reviewExists,
-        asyncErrorBoundary(deleteReview)
-    ]
+        asyncErrorBoundary(destroy)
+    ],
 }
