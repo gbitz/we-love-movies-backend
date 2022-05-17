@@ -13,7 +13,9 @@ async function movieExists(req,res,next) {
 
 async function list (req,res,next) {
     const isShowing = req.query.is_showing;
-    const data = isShowing ? await moviesService.listShowing() : await moviesService.list();
+    const fullList = await moviesService.list();
+    const onlyShowingList = await moviesService.listShowing()
+    const data = isShowing ? onlyShowingList : fullList;
     res.json({ data });
 }
 
@@ -24,8 +26,8 @@ async function read (req,res,next) {
 
 async function listReviews(req,res,next) {
     const {movie} = res.locals;
-    const data = await moviesService.listReviews(movie.movie_id);
-    res.json({data});
+    const reviews = await moviesService.listReviews(movie.movie_id);
+    res.json({data : reviews});
 }
 
 async function listTheaters(req,res,next) {
