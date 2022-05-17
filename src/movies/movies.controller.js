@@ -12,8 +12,9 @@ async function movieExists(req,res,next) {
 }
 
 async function list (req,res,next) {
-    const data = await moviesService.list();
-    res.json({ data })
+    const isShowing = req.query.is_showing
+    const data = isShowing ? await moviesService.listShowing() : await moviesService.list()
+    res.json({ data });
 }
 
 async function read (req,res,next) {
@@ -24,7 +25,6 @@ async function read (req,res,next) {
 async function listReviews(req,res,next) {
     const {movie} = res.locals;
     const data = await moviesService.listReviews(movie.movie_id);
-    console.log(data);
     res.json({data})
 }
 

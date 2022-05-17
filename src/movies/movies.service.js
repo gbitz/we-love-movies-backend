@@ -15,6 +15,13 @@ function list() {
     return knex("movies").select("*");
 }
 
+function listShowing() {
+    return knex("movies")
+        .join("movies_theaters", "movies_theaters.movie_id", "movies.movie_id")
+        .select("movies.*")
+        .where({"movies_theaters.is_showing" : true})
+}
+
 function read(movieId) {
     return knex("movies")
         .select("*")
@@ -35,4 +42,5 @@ module.exports = {
     list,
     read,
     listReviews,
+    listShowing,
 }
