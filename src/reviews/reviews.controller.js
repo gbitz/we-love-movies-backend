@@ -13,9 +13,20 @@ async function reviewExists(req,res,next) {
 
 async function destroy(req,res,next) {
     const {review} = res.locals;
-    console.log(review)
-    await reviewService.destroy(review.review_id)
-    res.sendStatus(204)
+    await reviewService.destroy(review.review_id);
+    res.sendStatus(204);
+}
+
+async function update(req,res,next) {
+    const {review} = res.locals;
+    const updatedReview = {
+        ...req.body.data,
+        review_id: review.review_id
+    };
+    await reviewService.update(updatedReview);
+    const data = await reviewService.getUpdatedReview(review.review_id);
+    console.log(data)
+    res.json({data});
 }
 
 module.exports = {
@@ -23,4 +34,8 @@ module.exports = {
         reviewExists,
         asyncErrorBoundary(destroy)
     ],
+    update: [
+        reviewExists,
+        asyncErrorBoundary(update)
+    ]
 }
